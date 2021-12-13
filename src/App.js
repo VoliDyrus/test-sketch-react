@@ -87,7 +87,6 @@ function App() {
       context.fillStyle = "black";
       context.fillRect(0, 0, width, height);
 
-      // add a ball
       context.save();
       context.translate(cx, cy);
       context.fillStyle = "black";
