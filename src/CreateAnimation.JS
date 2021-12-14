@@ -1,15 +1,19 @@
-import React, { useState } from "react";
-import { color } from "canvas-sketch-util";
-import canvasSketch from "canvas-sketch";
-import Canvas from "./Canvas";
-import random from "canvas-sketch-util/random";
-import math from "canvas-sketch-util/math";
+import React, { useState } from 'react';
+import { color } from 'canvas-sketch-util';
+import canvasSketch from 'canvas-sketch';
+import Canvas from './Canvas';
+import random from 'canvas-sketch-util/random';
+import math from 'canvas-sketch-util/math';
 
 const settings = {
   dimensions: [1080, 1080],
   animate: true,
   fps: 60,
 };
+
+const width = settings.dimensions[0];
+const height = settings.dimensions[1];
+
 const params = {
   n: 90,
   cr: 150,
@@ -52,7 +56,7 @@ const Update = (Agent) => {
 
 const draw = (context, Agent) => {
   context.save();
-  context.strokeStyle = "blue";
+  context.strokeStyle = 'blue';
   context.translate(Agent.pos.x, Agent.pos.y);
   console.log(Agent.pos);
   context.lineWidth = 1;
@@ -64,9 +68,9 @@ const draw = (context, Agent) => {
   context.restore();
 };
 
-const sketch = ({ width, height }) => {
-  const agents = [];
+const agents = [];
 
+const sketch = ({ width, height }) => {
   const n = params.n;
   const cr = params.cr;
 
@@ -81,12 +85,12 @@ const sketch = ({ width, height }) => {
   const cy = height / 2;
 
   return ({ context, width, height }) => {
-    context.fillStyle = "black";
+    context.fillStyle = 'black';
     context.fillRect(0, 0, width, height);
 
     context.save();
     context.translate(cx, cy);
-    context.fillStyle = "black";
+    context.fillStyle = 'black';
 
     context.beginPath();
     context.arc(0, 0, cr, 0, Math.PI * 2);
@@ -122,9 +126,13 @@ const sketch = ({ width, height }) => {
         agent.vel.y = agent.vel.y * -0.51;
       }
     }
+    agents.forEach((agent) => {
+      Update(agent);
+      draw(context, agent);
+      Bounce(width, height, agent);
+      Wrap(width, height, agent);
+    });
   };
 };
 
-canvasSketch(sketch, settings);
-
-export default draw;
+export default sketch;

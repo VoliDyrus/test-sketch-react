@@ -1,10 +1,10 @@
-import React from "react";
-import { useEffect, useRef } from "react";
-import draw from "./App";
-import random from "canvas-sketch-util/random";
-import math from "canvas-sketch-util/math";
-import { color } from "canvas-sketch-util";
-import canvasSketch from "canvas-sketch";
+import React from 'react';
+import { useEffect, useRef } from 'react';
+import draw from './App';
+import random from 'canvas-sketch-util/random';
+import math from 'canvas-sketch-util/math';
+import { color } from 'canvas-sketch-util';
+import canvasSketch from 'canvas-sketch';
 //import UseCanvas from "./UseCanvas";
 
 const Canvas = (props) => {
@@ -61,7 +61,7 @@ const Canvas = (props) => {
 
   const draw = (context, Agent) => {
     context.save();
-    context.strokeStyle = "blue";
+    context.strokeStyle = 'blue';
     context.translate(Agent.pos.x, Agent.pos.y);
     console.log(Agent.pos);
     context.lineWidth = 1;
@@ -90,12 +90,12 @@ const Canvas = (props) => {
     const cy = height / 2;
 
     return ({ context, width, height }) => {
-      context.fillStyle = "black";
+      context.fillStyle = 'black';
       context.fillRect(0, 0, width, height);
 
       context.save();
       context.translate(cx, cy);
-      context.fillStyle = "black";
+      context.fillStyle = 'black';
 
       context.beginPath();
       context.arc(0, 0, cr, 0, Math.PI * 2);
@@ -131,24 +131,20 @@ const Canvas = (props) => {
           agent.vel.y = agent.vel.y * -0.51;
         }
       }
+      agents.forEach((agent) => {
+        Update(agent);
+        draw(context, agent);
+        Bounce(width, height, agent);
+        Wrap(width, height, agent);
+      });
     };
   };
 
   useEffect(() => {
     if (canvasRef) {
       const canvas = canvasRef.current;
-      const context = canvas.getContext("2d");
+      const context = canvas.getContext('2d');
       canvasSketch(sketch, settings);
-
-      const render = () => {
-        agents.forEach((agent) => {
-          Update(agent);
-          draw(context, agent);
-          Bounce(width, height, agent);
-          Wrap(width, height, agent);
-        });
-      };
-      render();
     }
   });
 
