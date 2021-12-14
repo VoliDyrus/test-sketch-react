@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { color } from "canvas-sketch-util";
-
 import canvasSketch from "canvas-sketch";
 import Canvas from "./Canvas";
 import random from "canvas-sketch-util/random";
@@ -52,11 +51,10 @@ function App() {
     Agent.pos.y += Agent.vel.y;
   };
 
-  const draw = (context, Agent) => {
+  const draw = async (context, Agent) => {
     context.save();
 
-    context.strokeStyle = "blue";
-    context.translate(Agent.pos.x, Agent.pos.y);
+    context.strokeStyle = "pink";
     context.lineWidth = 1;
     context.beginPath();
     context.arc(0, 0, Agent.radius, 0, Math.PI * 2);
